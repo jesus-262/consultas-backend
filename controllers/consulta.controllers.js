@@ -49,11 +49,13 @@ puppeteer.use(
   console.log("paso y ejecuto")
   //await browser.close();
   console.log("paso y termino")
+  
   const page= await browser.newPage();
+  console.log("abrio browser")
   page.goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");
    //await browser.newPage().goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");;
   
-  await browser.close();
+
   console.log("cerro el browser")
 })();
 
