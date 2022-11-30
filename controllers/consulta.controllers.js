@@ -25,7 +25,7 @@ puppeteer.use(
 //mostrar varios
 
 
- /*
+ 
  (async () => {
   
   const option = {
@@ -46,11 +46,11 @@ puppeteer.use(
   }).catch(function(error) {
       console.log(error);
   });
-  const page = await browser.newPage();
-  await page.goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");
+   await browser.newPage().goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");;
+  
   await browser.close();
 })();
-*/
+
  
  consultacontrol.postConsultaNombre = async(req, res)=>{
   console.log("prueba")
