@@ -2,10 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 require('dotenv').config()
+
 const app=express();
 
 //configuracion
-app.set('port', process.env.PORT || 4000);
+app.set('port', process.env.DB_PORT || 4000);
 app.use(morgan('dev'));
 //para unir frontend con backend
 
