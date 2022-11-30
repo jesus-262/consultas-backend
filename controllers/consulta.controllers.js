@@ -51,7 +51,7 @@ consultacontrol.getConsulta = async(req, res)=>{
  
   console.log("req.params.cedula")
   
-  const browser= await puppeteercore.launch({headless:false, executablePath: "/usr/bin/chromium-browser"});
+  const browser= await puppeteercore.launch({headless:false,  args: ["--no-sandbox"],executablePath: "/usr/bin/chromium-browser"});
   // const browser= await puppeteer.launch({headless:true, executablePath: executablePath()});
   //'/usr/bin/chromium-browser'
   // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
