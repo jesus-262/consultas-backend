@@ -40,7 +40,7 @@ puppeteer.use(
   };
   const stats = await PCR(option);
   const browser = await stats.puppeteer.launch({
-      headless: false,
+      headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
       executablePath: stats.executablePath
   }).catch(function(error) {
