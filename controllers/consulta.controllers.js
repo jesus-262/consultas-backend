@@ -56,8 +56,8 @@ puppeteer.use(
   console.log("prueba")
   const {cedula}=req.body;
   console.log(cedula);
-  //const browser= await puppeteer.launch({headless:false, executablePath: chromium.path});
-  const browser= await puppeteer.launch({headless:true, executablePath: executablePath()});
+  const browser= await puppeteer.launch({headless:false, executablePath: chromium.path});
+  //const browser= await puppeteer.launch({headless:true, executablePath: executablePath()});
   // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
    let page= await browser.newPage();
    console.log("BUSCANDO NOMBRE")
