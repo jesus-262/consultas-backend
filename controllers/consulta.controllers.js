@@ -168,7 +168,7 @@ puppeteer.use(
 
  }
  consultacontrol.postConsultaLugarDeVotacion = async(req, res)=>{
-  console.log("consulta")
+  console.log("consulta1")
   const {cedula}=req.body;
   console.log(cedula);
   const pagina= await puppeteer.launch({headless:true, executablePath: executablePath(),args : [ '--netifs-to-ignore=INTERFACE_TO_IGNORE' ]});
