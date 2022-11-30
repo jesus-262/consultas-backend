@@ -46,16 +46,43 @@ consultacontrol.getConsulta = async(req, res)=>{
    //await preparePageForTests(page);
      console.log("entro")
  }
- 
+ (async () => {
+  const PCR = require("puppeteer-chromium-resolver");
+  const option = {
+      revision: "",
+      detectionPath: "",
+      folderName: ".chromium-browser-snapshots",
+      defaultHosts: ["https://storage.googleapis.com", "https://npm.taobao.org/mirrors"],
+      hosts: [],
+      cacheRevisions: 2,
+      retry: 3,
+      silent: false
+  };
+  const stats = await PCR(option);
+  const browser = await stats.puppeteer.launch({
+      headless: false,
+      args: ["--no-sandbox"],
+      executablePath: stats.executablePath
+  }).catch(function(error) {
+      console.log(error);
+  });
+  const page = await browser.newPage();
+  await page.goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");
+  await browser.close();
+})();
  consultacontrol.getConsultaNombre = async(req, res)=>{
+  const stats = PCR.getStats();
+  if (stats) {
+    const browser= await   stats.puppeteer.launch({
+          headless: false,
+          args: ["--no-sandbox"],
+          executablePath: stats.executablePath
+      }).then(function(browser){
+          //...
+      }).catch(function(error) {
+          console.log(error);
+      });
  
-  console.log("req.params.cedula")
-  
-  const browser= await puppeteercore.launch({ headless: true, args: [
-    
-    '--no-sandbox',
-    '--disable-setuid-sandbox',
-],executablePath: "/usr/bin/chromium-browser"});
   // const browser= await puppeteer.launch({headless:true, executablePath: executablePath()});
   //'/usr/bin/chromium-browser'
   // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
@@ -165,7 +192,7 @@ res.send ("NO EXISTE LA CEDULA");
           res.send("XXXXXX");
         });
          
-  
+      }
  }
  consultacontrol.postConsultaNombre = async(req, res)=>{
   console.log("envio postConsultaNombre")
