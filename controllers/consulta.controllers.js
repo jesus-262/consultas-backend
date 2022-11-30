@@ -11,7 +11,7 @@ const puppeteer = require('puppeteer-extra');
 const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha');
 const {Builder, Browser, By, Key, until} = require('selenium-webdriver');
 const chromium = require('chromium');
-const {execFile} = require('child_process');
+
 puppeteer.use(
   RecaptchaPlugin({
     provider: {
