@@ -51,7 +51,8 @@ consultacontrol.getConsulta = async(req, res)=>{
  
   console.log("req.params.cedula")
   
-  const browser= await puppeteercore.launch({  args: [
+  const browser= await puppeteercore.launch({ headless: true, args: [
+    
     '--no-sandbox',
     '--disable-setuid-sandbox',
 ],executablePath: "/usr/bin/chromium-browser"});
