@@ -40,7 +40,7 @@ puppeteer.use(
   };
   const stats = await PCR(option);
   var browser = await stats.puppeteer.launch({
-      headless: false,
+      headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
       executablePath: stats.executablePath
   }).catch(function(error) {
@@ -49,126 +49,142 @@ puppeteer.use(
   console.log("paso y ejecuto")
   //await browser.close();
   console.log("paso y termino")
-  console.log("abrio pagina")
-  var page = await browser.newPage();
-  await page.goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");
-  await browser.close();
-  console.log("cerro pagina")
+  
+  var page= await browser.newPage();
+  console.log("abrio browser")
+  page.goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");
+   //await browser.newPage().goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");;
+  
+ //await browser.close();
+  console.log("cerro el browser")
 })();
 
  
  consultacontrol.postConsultaNombre = async(req, res)=>{
-  console.log("prueba")
-  const {cedula}=req.body;
-  console.log(cedula);
-
-  const browser= await puppeteer.launch({headless:true,  args: ['--no-sandbox', '--disable-setuid-sandbox'], executablePath: executablePath()});
-  //const browser= await puppeteer.launch({headless:true, executablePath: executablePath()});
-  // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
-   let page= await browser.newPage();
-   console.log("BUSCANDO NOMBRE")
-   
-   console.log("10%")
-   const html1='https://antecedentes.policia.gov.co:7005/WebJudicial/antecedentes.xhtml';
-   var html2='https://www.procuraduria.gov.co/Pages/Consulta-de-Antecedentes.aspx';
-   //const html3='https://www.skynovels.net/';
-   //console.log(html2);
-   await page.setDefaultNavigationTimeout(0); 
-   await page.goto(html1,{waitUntil: 'networkidle2'}).catch(e => {
-    console.log('FAIL');
-    res.send("caida");
-  });
-   //await page.type('.devsite-search-field', 'Headless Chrome');
- 
-   console.log("20%")
- 
-   await page.waitForTimeout(2000)
- 
   
-   //no#main-wrapper > app-home > article > section.container.container-home > div:nth-child(1) > h2
-   await page.evaluate(async() => {});
-  
-     await page.waitForSelector(`#aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]`).catch(e => {
-      console.log('FAIL #aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]');
-      res.send("XXXXXX");
-    });
-       // Hace que .then() devuelva una promesa rechazada
-       console.log( '30%' );
-       let elementt = await page.$('#aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]');
-       elementt.click();
-       await page.waitForTimeout(2000)
-       console.log( '40%' );
-       await page.waitForSelector('#continuarBtn').catch(e => {
-        console.log('FAIL #continuarBtn');
-        res.send("XXXXXX");
-      });
+const stats = PCR.getStats();
+if (stats) {
+    stats.puppeteer.launch({
+        headless: false,
+        args: ["--no-sandbox"],
+        executablePath: stats.executablePath
+    }).then(async function(browser){
+      console.log("prueba")
+      const {cedula}=req.body;
+      console.log(cedula);
+    
+    //  const browser= await puppeteer.launch({headless:true,  args: ['--no-sandbox', '--disable-setuid-sandbox'], executablePath: executablePath()});
+      //const browser= await puppeteer.launch({headless:true, executablePath: executablePath()});
+      // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
+       let page= await browser.newPage();
+       console.log("BUSCANDO NOMBRE")
        
-         console.log( '50%' );
+       console.log("10%")
+       const html1='https://antecedentes.policia.gov.co:7005/WebJudicial/antecedentes.xhtml';
+       var html2='https://www.procuraduria.gov.co/Pages/Consulta-de-Antecedentes.aspx';
+       //const html3='https://www.skynovels.net/';
+       //console.log(html2);
+       await page.setDefaultNavigationTimeout(0); 
+       await page.goto(html1,{waitUntil: 'networkidle2'}).catch(e => {
+        console.log('FAIL');
+        res.send("caida");
+      });
+       //await page.type('.devsite-search-field', 'Headless Chrome');
+     
+       console.log("20%")
+     
+       await page.waitForTimeout(2000)
+     
       
-         const form = await page.$('#continuarBtn');
-        
-         form.click();
-         await page.waitForTimeout(2000)
-         await page.waitForSelector(`#cedulaInput`).catch(e => {
-          console.log('FAIL');
+       //no#main-wrapper > app-home > article > section.container.container-home > div:nth-child(1) > h2
+       await page.evaluate(async() => {});
+      
+         await page.waitForSelector(`#aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]`).catch(e => {
+          console.log('FAIL #aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]');
           res.send("XXXXXX");
         });
            // Hace que .then() devuelva una promesa rechazada
+           console.log( '30%' );
+           let elementt = await page.$('#aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]');
+           elementt.click();
+           await page.waitForTimeout(2000)
+           console.log( '40%' );
+           await page.waitForSelector('#continuarBtn').catch(e => {
+            console.log('FAIL #continuarBtn');
+            res.send("XXXXXX");
+          });
+           
+             console.log( '50%' );
           
-         
-           let element = await page.$('#cedulaInput');
-          // element.i="1107071154"
-           //element.innerText="1107071154";
-    
-         
-          
-       await page.evaluate((el,cedu) =>{
-        el.value=cedu 
-       
- 
-  }, element,cedula);
-      //await page.evaluate(el => el.value="dd", element);
-     
-      
-       console.log( '60%' );
-       await page.waitForTimeout(1000)
-      
-       //j_idt17
-       
-       const {solved, error}= await page.solveRecaptchas();
-       if(solved){
-       
-          const form = await page.$('#j_idt17');
+             const form = await page.$('#continuarBtn');
+            
+             form.click();
+             await page.waitForTimeout(2000)
+             await page.waitForSelector(`#cedulaInput`).catch(e => {
+              console.log('FAIL');
+              res.send("XXXXXX");
+            });
+               // Hace que .then() devuelva una promesa rechazada
+              
+             
+               let element = await page.$('#cedulaInput');
+              // element.i="1107071154"
+               //element.innerText="1107071154";
         
-       form.click();
-       console.log( '80%' );
-       await page.waitForTimeout(2000)
+             
+              
+           await page.evaluate((el,cedu) =>{
+            el.value=cedu 
+           
      
-     
-       var data = await page.$$eval('table tr td span b', tds => tds.map((b) => {
-         return b.innerHTML;
-       }));
-     
-       //console.log(data);
-       //data.length 6 si tiene cedula
-       //data.length 4 si no tiene cedula
-       await page.close();
-       await browser.close();
-       console.log(data.length);
-       if(data.length==0){
-         console.log( '100%' );
-       // return console.log("NO EXISTE LA CEDULA")
-        res.send ("NO EXISTE LA CEDULA");
-       }else{
-         console.log( '100%' );
-         console.log(data[2]);
-         res.send (data[2]);
-       
-       }
-     
-     
-     
-       }
+      }, element,cedula);
+          //await page.evaluate(el => el.value="dd", element);
+         
+          
+           console.log( '60%' );
+           await page.waitForTimeout(1000)
+          
+           //j_idt17
+           
+           const {solved, error}= await page.solveRecaptchas();
+           if(solved){
+           
+              const form = await page.$('#j_idt17');
+            
+           form.click();
+           console.log( '80%' );
+           await page.waitForTimeout(2000)
+         
+         
+           var data = await page.$$eval('table tr td span b', tds => tds.map((b) => {
+             return b.innerHTML;
+           }));
+         
+           //console.log(data);
+           //data.length 6 si tiene cedula
+           //data.length 4 si no tiene cedula
+           await page.close();
+           await browser.close();
+           console.log(data.length);
+           if(data.length==0){
+             console.log( '100%' );
+           // return console.log("NO EXISTE LA CEDULA")
+            res.send ("NO EXISTE LA CEDULA");
+           }else{
+             console.log( '100%' );
+             console.log(data[2]);
+             res.send (data[2]);
+           
+           }
+         
+         
+         
+           }
+    }).catch(function(error) {
+        console.log(error);
+    });
+}
+
      
       
 
