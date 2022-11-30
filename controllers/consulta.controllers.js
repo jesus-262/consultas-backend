@@ -50,7 +50,9 @@ consultacontrol.getConsulta = async(req, res)=>{
  consultacontrol.getConsultaNombre = async(req, res)=>{
  
   console.log("req.params.cedula")
-  const browser= await puppeteer.launch({headless:true, executablePath: executablePath()});
+  const browser= await puppeteer.launch({headless:true, executablePath: '/usr/bin/chromium-browser', args: [ '--disable-gpu', '--disable-setuid-sandbox', '--no-sandbox', '--no-zygote' ]});
+  // const browser= await puppeteer.launch({headless:true, executablePath: executablePath()});
+  //'/usr/bin/chromium-browser'
   // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
    let page= await browser.newPage();
    console.log("BUSCANDO NOMBRE")
