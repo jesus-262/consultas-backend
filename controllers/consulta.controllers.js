@@ -3,7 +3,7 @@ const path =require('path');
 console.log("funciona");
 var jsdom = require("jsdom");
 
-
+const PCR = require("puppeteer-chromium-resolver");
 const {executablePath} = require('puppeteer')
 const puper = require('puppeteer')
 const puppeteer = require('puppeteer-extra');
@@ -50,7 +50,25 @@ consultacontrol.getConsulta = async(req, res)=>{
  consultacontrol.getConsultaNombre = async(req, res)=>{
  
   console.log("req.params.cedula")
-  const browser= await puppeteer.launch({headless:true, executablePath: '/usr/bin/chromium-browser', args: [ '--disable-gpu', '--disable-setuid-sandbox', '--no-sandbox', '--no-zygote' ]});
+  const option = {
+    revision: "",
+    detectionPath: "",
+    folderName: ".chromium-browser-snapshots",
+    defaultHosts: ["https://storage.googleapis.com", "https://npm.taobao.org/mirrors"],
+    hosts: [],
+    cacheRevisions: 2,
+    retry: 3,
+    silent: false
+};
+const stats = await PCR(option);
+const browser = await stats.puppeteer.launch({
+  headless: false,
+  args: ["--no-sandbox"],
+  executablePath: stats.executablePath
+}).catch(function(error) {
+  console.log(error);
+});
+  //const browser= await puppeteer.launch({headless:true, executablePath: '/usr/bin/chromium-browser', args: [ '--disable-gpu', '--disable-setuid-sandbox', '--no-sandbox', '--no-zygote' ]});
   // const browser= await puppeteer.launch({headless:true, executablePath: executablePath()});
   //'/usr/bin/chromium-browser'
   // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
