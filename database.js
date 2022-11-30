@@ -1,6 +1,6 @@
 //var db =require('mysql2/promise');
 const { database } = require ('./keys');
-//const {promisify} =require('util')
+const {promisify} =require('util')
 const mysql = require('mysql2');
 
 var pool = mysql.createPool(database);
@@ -38,7 +38,7 @@ if(connection){
 }
 });*/
 //para poder utilizar promesas
-//pool.query = promisify(pool.query);
+pool.query = promisify(pool.query);
 
 
 module.exports = pool;
