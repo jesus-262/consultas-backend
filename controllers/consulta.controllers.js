@@ -55,7 +55,7 @@ puppeteer.use(
   page.goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");
    //await browser.newPage().goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");;
   
-
+  await browser.close();
   console.log("cerro el browser")
 })();
 
