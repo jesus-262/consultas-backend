@@ -8,7 +8,7 @@ const pool = mysql.createPool(database);
 pool.getConnection((err,connection)=>{
 
 if(err){
-   console.log("error");
+   console.log("error base de datos");
 }
 if(connection){
     connection.release();
