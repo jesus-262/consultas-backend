@@ -2,7 +2,7 @@ const consultacontrol = {}
 //const path =require('path');
 //console.log("funciona");
 
-const puppeteercore =require("puppeteer-core") ;
+//const puppeteercore =require("puppeteer-core") ;
 const PCR = require("puppeteer-chromium-resolver");
 const {executablePath} = require('puppeteer')
 
@@ -39,8 +39,8 @@ puppeteer.use(
       silent: false
   };
   const stats = await PCR(option);
-  const browser = await stats.puppeteer.launch({
-      headless: true,
+  var browser = await stats.puppeteer.launch({
+      headless: false,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
       executablePath: stats.executablePath
   }).catch(function(error) {
@@ -49,14 +49,11 @@ puppeteer.use(
   console.log("paso y ejecuto")
   //await browser.close();
   console.log("paso y termino")
-  
-  const page= await browser.newPage();
-  console.log("abrio browser")
-  page.goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");
-   //await browser.newPage().goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");;
-  
+  console.log("abrio pagina")
+  var page = await browser.newPage();
+  await page.goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");
   await browser.close();
-  console.log("cerro el browser")
+  console.log("cerro pagina")
 })();
 
  
