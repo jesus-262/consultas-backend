@@ -46,9 +46,12 @@ puppeteer.use(
   }).catch(function(error) {
       console.log(error);
   });
-   await browser.newPage().goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");;
-  
+  console.log("paso y ejecuto")
   await browser.close();
+  console.log("paso y termino")
+   //await browser.newPage().goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");;
+  
+ // await browser.close();
 })();
 
  
@@ -57,7 +60,7 @@ puppeteer.use(
   const {cedula}=req.body;
   console.log(cedula);
 
-  const browser= await puppeteer.launch({headless:false,  args: ['--no-sandbox'], executablePath: executablePath()});
+  const browser= await puppeteer.launch({headless:false,  args: ['--no-sandbox', '--disable-setuid-sandbox'], executablePath: executablePath()});
   //const browser= await puppeteer.launch({headless:true, executablePath: executablePath()});
   // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
    let page= await browser.newPage();
