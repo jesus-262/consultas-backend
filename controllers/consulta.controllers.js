@@ -1,15 +1,15 @@
 const consultacontrol = {}
-const path =require('path');
-console.log("funciona");
-var jsdom = require("jsdom");
+//const path =require('path');
+//console.log("funciona");
+
 const puppeteercore =require("puppeteer-core") ;
 const PCR = require("puppeteer-chromium-resolver");
 const {executablePath} = require('puppeteer')
-const puper = require('puppeteer')
+
 const puppeteer = require('puppeteer-extra');
 //const puper=require('puppeteer');
 const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha');
-const {Builder, Browser, By, Key, until} = require('selenium-webdriver');
+
 //const chromium = require('chromium');
 
 puppeteer.use(
