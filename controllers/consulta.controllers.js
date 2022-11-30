@@ -10,7 +10,8 @@ const puppeteer = require('puppeteer-extra');
 //const puper=require('puppeteer');
 const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha');
 const {Builder, Browser, By, Key, until} = require('selenium-webdriver');
-
+const chromium = require('chromium');
+const {execFile} = require('child_process');
 puppeteer.use(
   RecaptchaPlugin({
     provider: {
@@ -20,9 +21,6 @@ puppeteer.use(
     visualFeedback: true // colorize reCAPTCHAs (violet = detected, green = solved)
   })
 );
-
-
- 
 
 //mostrar varios
 consultacontrol.postConsulta = async(req, res)=>{
@@ -46,8 +44,9 @@ consultacontrol.getConsulta = async(req, res)=>{
    //await preparePageForTests(page);
      console.log("entro")
  }
+ /*
  (async () => {
-  const PCR = require("puppeteer-chromium-resolver");
+  
   const option = {
       revision: "",
       detectionPath: "",
@@ -70,8 +69,9 @@ consultacontrol.getConsulta = async(req, res)=>{
   await page.goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");
   await browser.close();
 })();
+*/
  consultacontrol.getConsultaNombre = async(req, res)=>{
-  const stats = PCR.getStats();
+ /* const stats = PCR.getStats();
   if (stats) {
     const browser= await   stats.puppeteer.launch({
           headless: false,
@@ -82,8 +82,12 @@ consultacontrol.getConsulta = async(req, res)=>{
       }).catch(function(error) {
           console.log(error);
       });
- 
-  // const browser= await puppeteer.launch({headless:true, executablePath: executablePath()});
+   }*/
+   /*
+   execFile(chromium.path, ['https://google.com'], err => {
+	console.log('Hello Google!');
+});*/
+   const browser= await puppeteer.launch({headless:true, executablePath: chromium.path});
   //'/usr/bin/chromium-browser'
   // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
    let page= await browser.newPage();
@@ -192,7 +196,7 @@ res.send ("NO EXISTE LA CEDULA");
           res.send("XXXXXX");
         });
          
-      }
+    
  }
  consultacontrol.postConsultaNombre = async(req, res)=>{
   console.log("envio postConsultaNombre")
