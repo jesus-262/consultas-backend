@@ -60,8 +60,8 @@ consultacontrol.getConsulta = async(req, res)=>{
   };
   const stats = await PCR(option);
   const browser = await stats.puppeteer.launch({
-      headless: true,
-      args: ["--no-sandbox"],
+      headless: false,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
       executablePath: stats.executablePath
   }).catch(function(error) {
       console.log(error);
