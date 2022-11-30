@@ -47,7 +47,7 @@ puppeteer.use(
       console.log(error);
   });
   console.log("paso y ejecuto")
-  await browser.close();
+  //await browser.close();
   console.log("paso y termino")
    //await browser.newPage().goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");;
   
