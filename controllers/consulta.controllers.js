@@ -10,7 +10,7 @@ const puppeteer = require('puppeteer-extra');
 //const puper=require('puppeteer');
 const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha');
 const {Builder, Browser, By, Key, until} = require('selenium-webdriver');
-const chromium = require('chromium');
+//const chromium = require('chromium');
 
 puppeteer.use(
   RecaptchaPlugin({
@@ -57,7 +57,7 @@ puppeteer.use(
   const {cedula}=req.body;
   console.log(cedula);
 
-  const browser= await puppeteer.launch({headless:false, executablePath: chromium.path});
+  const browser= await puppeteer.launch({headless:false,  args: ['--no-sandbox'], executablePath: executablePath()});
   //const browser= await puppeteer.launch({headless:true, executablePath: executablePath()});
   // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
    let page= await browser.newPage();
@@ -66,8 +66,8 @@ puppeteer.use(
    console.log("10%")
    const html1='https://antecedentes.policia.gov.co:7005/WebJudicial/antecedentes.xhtml';
    var html2='https://www.procuraduria.gov.co/Pages/Consulta-de-Antecedentes.aspx';
-   const html3='https://www.skynovels.net/';
-   console.log(html2);
+   //const html3='https://www.skynovels.net/';
+   //console.log(html2);
    await page.setDefaultNavigationTimeout(0); 
    await page.goto(html1,{waitUntil: 'networkidle2'}).catch(e => {
     console.log('FAIL');
