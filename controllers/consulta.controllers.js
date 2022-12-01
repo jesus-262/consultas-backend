@@ -239,7 +239,7 @@ puppeteer.use(
         console.log(data);
     //  console.log(data[0]);
      
-      await pagina.close();
+      await browser.close();
       const myJSON = JSON.stringify(data);
       console.log(myJSON.toString());
      
