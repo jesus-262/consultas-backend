@@ -73,13 +73,17 @@ puppeteer.use(
   // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
    let page= await browser.newPage();
    console.log("BUSCANDO NOMBRE")
-   
+       
    console.log("10%")
    const html1='https://antecedentes.policia.gov.co:7005/WebJudicial/antecedentes.xhtml';
-   const html2='https://www.procuraduria.gov.co/Pages/Consulta-de-Antecedentes.aspx';
-   const html3='https://www.skynovels.net/';
+   var html2='https://www.procuraduria.gov.co/Pages/Consulta-de-Antecedentes.aspx';
+   //const html3='https://www.skynovels.net/';
+   //console.log(html2);
    await page.setDefaultNavigationTimeout(0); 
-   await page.goto(html1,{waitUntil: 'networkidle2'});
+   await page.goto(html1,{waitUntil: 'networkidle2'}).catch(e => {
+    console.log('FAIL');
+    res.send("caida");
+  });
    //await page.type('.devsite-search-field', 'Headless Chrome');
  
    console.log("20%")
@@ -90,14 +94,20 @@ puppeteer.use(
    //no#main-wrapper > app-home > article > section.container.container-home > div:nth-child(1) > h2
    await page.evaluate(async() => {});
   
-     await page.waitForSelector(`#aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]`) 
+     await page.waitForSelector(`#aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]`).catch(e => {
+      console.log('FAIL #aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]');
+      res.send("XXXXXX");
+    });
        // Hace que .then() devuelva una promesa rechazada
        console.log( '30%' );
-       let elementt = await page.$('#aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]')
+       let elementt = await page.$('#aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]');
        elementt.click();
        await page.waitForTimeout(2000)
        console.log( '40%' );
-       await page.waitForSelector('#continuarBtn')
+       await page.waitForSelector('#continuarBtn').catch(e => {
+        console.log('FAIL #continuarBtn');
+        res.send("XXXXXX");
+      });
        
          console.log( '50%' );
       
@@ -105,7 +115,10 @@ puppeteer.use(
         
          form.click();
          await page.waitForTimeout(2000)
-         await page.waitForSelector(`#cedulaInput`)
+         await page.waitForSelector(`#cedulaInput`).catch(e => {
+          console.log('FAIL');
+          res.send("XXXXXX");
+        });
            // Hace que .then() devuelva una promesa rechazada
           
          
@@ -147,23 +160,28 @@ puppeteer.use(
        //data.length 4 si no tiene cedula
        await page.close();
        await browser.close();
-       if(data.length==4){
+       console.log(data.length);
+       if(data.length==0){
          console.log( '100%' );
-        return console.log("NO EXISTE LA CEDULA")
+       // return console.log("NO EXISTE LA CEDULA")
+        res.send ("NO EXISTE LA CEDULA");
        }else{
          console.log( '100%' );
          console.log(data[2]);
-         return data[2];
+         res.send (data[2]);
        
        }
      
      
      
        }
+}
      
-      
+     
+     
+       
 
- }
+ 
  consultacontrol.postConsultaLugarDeVotacion = async(req, res)=>{
   console.log("consulta1")
   const {cedula}=req.body;
