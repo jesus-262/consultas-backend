@@ -67,6 +67,10 @@ if (stats) {
     stats.puppeteer.launch({
         headless: false,
         args: ["--no-sandbox"],
+        env: {
+
+          DISPLAY: ":10.0"
+      },
         executablePath: stats.executablePath
     }).then(async function(browser){
       console.log("prueba")
