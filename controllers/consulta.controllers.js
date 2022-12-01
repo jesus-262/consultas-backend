@@ -65,7 +65,7 @@ puppeteer.use(
 const stats = PCR.getStats();
 if (stats) {
     stats.puppeteer.launch({
-        headless: false,
+        headless: true,
         args: ["--no-sandbox"],
         env: {
 
