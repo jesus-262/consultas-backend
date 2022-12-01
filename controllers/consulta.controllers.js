@@ -46,22 +46,23 @@ puppeteer.use(
   }).catch(function(error) {
       console.log(error);
   });
-  console.log("paso y ejecuto")
+ 
   //await browser.close();
-  console.log("paso y termino")
+ 
   
-  var page= await browser.newPage();
-  console.log("abrio browser")
-  page.goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");
+  //var page= await browser.newPage();
+
+  //page.goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");
    //await browser.newPage().goto("https://www.npmjs.com/package/puppeteer-chromium-resolver");;
   
  //await browser.close();
-  console.log("cerro el browser")
+  console.log("Funciono PUP")
 })();
 
  
  consultacontrol.postConsultaNombre = async(req, res)=>{
-  console.log("consulta1")
+  console.log("Consulta : Nombre")
+ 
   const {cedula}=req.body;
   console.log(cedula);
   const browser= await puppeteer.launch({headless:true,  
@@ -183,11 +184,17 @@ puppeteer.use(
 
  
  consultacontrol.postConsultaLugarDeVotacion = async(req, res)=>{
-  console.log("consulta1")
+  console.log("Consulta : Lugar de votacion")
   const {cedula}=req.body;
   console.log(cedula);
-  const pagina= await puppeteer.launch({headless:true, executablePath: executablePath(),args : [ '--netifs-to-ignore=INTERFACE_TO_IGNORE' ]});
-  let page= await pagina.newPage();
+  const browser= await puppeteer.launch({headless:true,  
+    args: ["--no-sandbox"],
+    env: {
+
+      DISPLAY: ":10.0"
+  }, executablePath: executablePath()});
+ // const pagina= await puppeteer.launch({headless:true, executablePath: executablePath(),args : [ '--netifs-to-ignore=INTERFACE_TO_IGNORE' ]});
+  let page= await browser.newPage();
   await page.setDefaultNavigationTimeout(0); 
   page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
   await page.goto('https://wsp.registraduria.gov.co/censo/consultar');
