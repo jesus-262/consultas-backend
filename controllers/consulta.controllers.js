@@ -167,9 +167,23 @@ puppeteer.use(
        // return console.log("NO EXISTE LA CEDULA")
         res.send ("NO EXISTE LA CEDULA");
        }else{
-         console.log( '100%' );
-         console.log(data[2]);
-         res.send (data[2]);
+         console.log( '1000%' );
+        
+         if(data[2]=='NO TIENE ASUNTOS PENDIENTES CON LAS AUTORIDADES JUDICIALES'){
+          console.log( 'cambiando' );
+          console.log( 'resultado' );
+          console.log(data[1]);
+          console.log(data[2]);
+          console.log(data[3]);
+          res.send (data[1]);
+         }else{
+          console.log("resultado");
+       
+          console.log(data[2]);
+          res.send (data[2]);
+         }
+       
+        
        
        }
      
