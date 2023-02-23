@@ -171,7 +171,9 @@ puppeteer.use(
         res.send ("NO EXISTE LA CEDULA");
        }else{
          console.log( '1000%' );
-        
+        if(data[2]=='<u>preguntas frecuentes</u>'){
+          res.send ('Cedula no existe');
+        }
          if(data[2]=='NO TIENE ASUNTOS PENDIENTES CON LAS AUTORIDADES JUDICIALES'){
           console.log( 'cambiando' );
           console.log( 'resultado' );
