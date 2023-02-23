@@ -70,7 +70,10 @@ puppeteer.use(
     env: {
 
       DISPLAY: ":10.0"
-  }, executablePath: executablePath()});
+  }, executablePath: executablePath()}).catch(e => {
+    console.log('FAIL');
+    res.send("Intente otra vez, muchas peticiones a la vez");
+  });
   // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
    let page= await browser.newPage();
    console.log("BUSCANDO NOMBRE")
@@ -83,7 +86,7 @@ puppeteer.use(
    await page.setDefaultNavigationTimeout(0); 
    await page.goto(html1,{waitUntil: 'networkidle2'}).catch(e => {
     console.log('FAIL');
-    res.send("caida");
+    res.send("Intente otra vez, paginas de donde viene la informacion caidas");
   });
    //await page.type('.devsite-search-field', 'Headless Chrome');
  
@@ -207,7 +210,10 @@ puppeteer.use(
     env: {
 
       DISPLAY: ":10.0"
-  }, executablePath: executablePath()});
+  }, executablePath: executablePath()}).catch(e => {
+    console.log('FAIL');
+    res.send("Intente otra vez, muchas peticiones a la vez");
+  });
  // const pagina= await puppeteer.launch({headless:true, executablePath: executablePath(),args : [ '--netifs-to-ignore=INTERFACE_TO_IGNORE' ]});
   let page= await browser.newPage();
   await page.setDefaultNavigationTimeout(0); 

@@ -5,7 +5,7 @@ const pool = require('../database');
 //mostrar uno
 datoscontrol.getDatos = async(req, res)=>{
 
-  const query='SELECT * FROM persona ORDER BY persona.id DESC LIMIT 5';
+  const query='SELECT * FROM persona ORDER BY persona.id DESC LIMIT 8';
          
   
   const persona= await pool.query(query)
