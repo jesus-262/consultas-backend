@@ -116,7 +116,12 @@ puppeteer.use(
          console.log( '50%' );
       
          const form = await page.$('#continuarBtn');
-        
+         if(form!=""){
+          console.log("encontro form")
+
+         }else{
+          console.log("no encontro form")
+         }
          form.click();
          await page.waitForTimeout(2000)
          await page.waitForSelector(`#cedulaInput`).catch(e => {
