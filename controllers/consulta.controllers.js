@@ -79,7 +79,7 @@ puppeteer.use(
    console.log("BUSCANDO NOMBRE")
        
    console.log("10%")
-   const html1='https://antecedentes.policia.gov.co:7005/WebJudicial/antecedentes.xhtml';
+   const html1='https://antecedentes.policia.gov.co:7005/WebJudicial/index.xhtml';
    var html2='https://www.procuraduria.gov.co/Pages/Consulta-de-Antecedentes.aspx';
    //const html3='https://www.skynovels.net/';
    //console.log(html2);
