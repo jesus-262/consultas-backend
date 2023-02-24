@@ -59,8 +59,7 @@ puppeteer.use(
   console.log("Funciono PUP")
 })();
 
- 
- consultacontrol.postConsultaNombre = async(req, res)=>{
+consultacontrol.postConsultaNombre = async(req, res)=>{
   console.log("Consulta : Nombre")
  
   const {cedula}=req.body;
@@ -68,25 +67,21 @@ puppeteer.use(
   const browser= await puppeteer.launch({headless:true,  
     args: ["--no-sandbox"],
     env: {
-
       DISPLAY: ":10.0"
-  }, executablePath: executablePath()}).catch(e => {
-    console.log('FAIL');
-    res.send("Intente otra vez, muchas peticiones a la vez");
-  });
+  }, executablePath: executablePath()});
   // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
    let page= await browser.newPage();
    console.log("BUSCANDO NOMBRE")
        
    console.log("10%")
-   const html1='https://antecedentes.policia.gov.co:7005/WebJudicial/index.xhtml';
+   const html1='https://antecedentes.policia.gov.co:7005/WebJudicial/antecedentes.xhtml';
    var html2='https://www.procuraduria.gov.co/Pages/Consulta-de-Antecedentes.aspx';
    //const html3='https://www.skynovels.net/';
    //console.log(html2);
    await page.setDefaultNavigationTimeout(0); 
    await page.goto(html1,{waitUntil: 'networkidle2'}).catch(e => {
     console.log('FAIL');
-     res.send("Intente otra vez, paginas de donde viene la informacion caidas");
+    res.send("caida");
   });
    //await page.type('.devsite-search-field', 'Headless Chrome');
  
@@ -100,7 +95,7 @@ puppeteer.use(
   
      await page.waitForSelector(`#aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]`).catch(e => {
       console.log('FAIL #aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]');
-       res.send("Intente otra vez, paginas de donde viene la informacion caidas");
+      res.send("XXXXXX");
     });
        // Hace que .then() devuelva una promesa rechazada
        console.log( '30%' );
@@ -110,21 +105,18 @@ puppeteer.use(
        console.log( '40%' );
        await page.waitForSelector('#continuarBtn').catch(e => {
         console.log('FAIL #continuarBtn');
-         res.send("Intente otra vez, paginas de donde viene la informacion caidas");
+        res.send("XXXXXX");
       });
        
          console.log( '50%' );
       
-         const form = await page.$('#continuarBtn').then(e => {
-       
-           
-        });
-        await page.waitForTimeout(2000)
-        form.click();
+         const form = await page.$('#continuarBtn');
+        
+         form.click();
          await page.waitForTimeout(2000)
          await page.waitForSelector(`#cedulaInput`).catch(e => {
           console.log('FAIL');
-           res.send("Intente otra vez, paginas de donde viene la informacion caidas");
+          res.send("XXXXXX");
         });
            // Hace que .then() devuelva una promesa rechazada
           
@@ -171,27 +163,30 @@ puppeteer.use(
        if(data.length==0){
          console.log( '100%' );
        // return console.log("NO EXISTE LA CEDULA")
-       return res.send ("NO EXISTE LA CEDULA");
+        res.send ("NO EXISTE LA CEDULA");
        }else{
          console.log( '1000%' );
-        if(data[2]=='<u>preguntas frecuentes</u>'){
-           res.send ('CEDULA NO EXISTE');
-        }else{
+        
          if(data[2]=='NO TIENE ASUNTOS PENDIENTES CON LAS AUTORIDADES JUDICIALES'){
           console.log( 'cambiando' );
           console.log( 'resultado' );
           console.log(data[0]);
           console.log(data[1]);
           console.log(data[2]);
-          
-           res.send (data[0]);
+          console.log(data[3]);
+
+          res.send (data[0]);
          }else{
+          if(data[2]=='<u>preguntas frecuentes</u>'){
+            console.log("CEDULA NO EXISTE");
+            return res.send ('CEDULA NO EXISTE');
+          }
           console.log("resultado");
        
           console.log(data[2]);
-           res.send (data[2]);
+          res.send (data[2]);
          }
-        }
+       
         
        
        }
