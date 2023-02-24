@@ -173,7 +173,7 @@ puppeteer.use(
          console.log( '1000%' );
         if(data[2]=='<u>preguntas frecuentes</u>'){
           res.send ('CEDULA NO EXISTE');
-        }
+        }else{
          if(data[2]=='NO TIENE ASUNTOS PENDIENTES CON LAS AUTORIDADES JUDICIALES'){
           console.log( 'cambiando' );
           console.log( 'resultado' );
@@ -188,7 +188,7 @@ puppeteer.use(
           console.log(data[2]);
           res.send (data[2]);
          }
-       
+        }
         
        
        }
