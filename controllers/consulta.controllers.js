@@ -121,7 +121,7 @@ puppeteer.use(
          await page.waitForTimeout(2000)
          await page.waitForSelector(`#cedulaInput`).catch(e => {
           console.log('FAIL');
-          return res.send("XXXXXX");
+          return res.send("Intente otra vez, paginas de donde viene la informacion caidas");
         });
            // Hace que .then() devuelva una promesa rechazada
           
