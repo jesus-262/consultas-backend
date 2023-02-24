@@ -138,12 +138,9 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
        await page.waitForTimeout(1000)
       
        //j_idt17
-       
+       var estadoBoton=false;
        const {solved, error}= await page.solveRecaptchas();
-       if(error){
-         console.log("error")
-       }
-       if(solved){
+         if(solved){
        
          // const form = await page.$('#j_idt17');
          /* const form = page.waitForSelector('#j_idt17').finally(e => {
@@ -152,7 +149,7 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
              form.click();
           });;*/
           await page.waitForTimeout(2000)
-          var estadoBoton=false;
+         
           await page.$eval( '#j_idt17', form => form.click() ).catch(e => {
             console.log('FAIL boton');
             estadoBoton=true;
@@ -177,9 +174,9 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
        // return console.log("NO EXISTE LA CEDULA")
         
         if(estadoBoton==true){
-          res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+          return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
         }else{
-          res.send ("NO EXISTE LA CEDULA");
+          return res.send ("NO EXISTE LA CEDULA");
         }
        }else{
          console.log( '1000%' );
