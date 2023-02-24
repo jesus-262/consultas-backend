@@ -116,13 +116,13 @@ puppeteer.use(
          console.log( '50%' );
       
          const form = await page.$('#continuarBtn').then(e => {
-          if(form){
+          if(form!=""){
             console.log("encontro form")
   
            }else{
             console.log("no encontro form")
            }
-console.log(form)
+
            form.click();
         });
         
