@@ -58,7 +58,6 @@ puppeteer.use(
  //await browser.close();
   console.log("Funciono PUP")
 })();
-
 consultacontrol.postConsultaNombre = async(req, res)=>{
   console.log("Consulta : Nombre")
  
@@ -170,17 +169,10 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
          if(data[2]=='NO TIENE ASUNTOS PENDIENTES CON LAS AUTORIDADES JUDICIALES'){
           console.log( 'cambiando' );
           console.log( 'resultado' );
-          console.log(data[0]);
-          console.log(data[1]);
-          console.log(data[2]);
-          console.log(data[3]);
+         
 
           res.send (data[0]);
          }else{
-          if(data[2]=='<u>preguntas frecuentes</u>'){
-            console.log("CEDULA NO EXISTE");
-            return res.send ('CEDULA NO EXISTE');
-          }
           console.log("resultado");
        
           console.log(data[2]);
@@ -195,9 +187,6 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
      
        }
 }
-     
-     
-     
        
 
  
