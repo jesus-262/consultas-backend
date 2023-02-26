@@ -69,7 +69,10 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
       DISPLAY: ":10.0"
   }, executablePath: executablePath()});
   // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
-   let page= await browser.newPage();
+   let page= await browser.newPage().catch(e => {
+    console.log('FAIL');
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+  });
    console.log("BUSCANDO NOMBRE")
        
    console.log("10%")
@@ -172,7 +175,9 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
        if(data.length==0){
          console.log( '100%' );
        // return console.log("NO EXISTE LA CEDULA")
-        
+        if(data[2]=='<u>preguntas frecuentes</u>'){
+          return res.send ("NO EXISTE LA CEDULA");
+        }
         if(estadoBoton==true){
           return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
         }else{
@@ -219,7 +224,10 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
     res.send("Intente otra vez, muchas peticiones a la vez");
   });
  // const pagina= await puppeteer.launch({headless:true, executablePath: executablePath(),args : [ '--netifs-to-ignore=INTERFACE_TO_IGNORE' ]});
-  let page= await browser.newPage();
+  let page= await browser.newPage().catch(e => {
+    console.log('FAIL');
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+  });
   await page.setDefaultNavigationTimeout(0); 
   page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
   await page.goto('https://wsp.registraduria.gov.co/censo/consultar');
