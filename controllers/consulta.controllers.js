@@ -190,6 +190,8 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
          if(data[2]=='NO TIENE ASUNTOS PENDIENTES CON LAS AUTORIDADES JUDICIALES'){
           console.log( 'NO TIENE ASUNTOS PENDIENTES CON LAS AUTORIDADES JUDICIALES CAMBIO A NOMBRE' );
           console.log( 'resultado' );
+          console.log( data[0] );
+          
          
 
           return res.send (data[0]);
