@@ -82,8 +82,8 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
    //console.log(html2);
    await page.setDefaultNavigationTimeout(0); 
    await page.goto(html1,{waitUntil: 'networkidle2'}).catch(e => {
-    console.log('FAIL pagina caida');
-    return res.send("caida");
+    console.log('PAGINA DONDE TRAEN LA INFO CAIDA, INTENTE OTRA VEZ');
+    return res.send("PAGINA DONDE TRAEN LA INFO CAIDA, INTENTE OTRA VEZ");
   });
    //await page.type('.devsite-search-field', 'Headless Chrome');
  
@@ -110,7 +110,7 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
        console.log( '40%' );
        await page.waitForSelector('#continuarBtn').catch(e => {
         console.log('FAIL #continuarBtn');
-        res.send("XXXXXX");
+        return res.send("FALLO TRAER CEDULA, INTENTE DE NUEVO");
       });
        
          console.log( '50%' );
@@ -121,7 +121,7 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
          await page.waitForTimeout(2000)
          await page.waitForSelector(`#cedulaInput`).catch(e => {
           console.log('FAIL');
-          res.send("XXXXXX");
+          return res.send("FALLO TRAER CEDULA, INTENTE DE NUEVO");
         });
            // Hace que .then() devuelva una promesa rechazada
           
@@ -192,7 +192,7 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
           console.log( 'resultado' );
          
 
-          res.send (data[0]);
+          return res.send (data[0]);
          }else{
           console.log("resultado");
           if(data[2]=='<u>preguntas frecuentes</u>'){
@@ -200,7 +200,7 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
             return res.send ("NO EXISTE LA CEDULA");
           }else{
             console.log(data[2]);
-            res.send (data[2]);
+            return res.send (data[2]);
           }
         
          }
@@ -227,7 +227,7 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
       DISPLAY: ":10.0"
   }, executablePath: executablePath()}).catch(e => {
     console.log('FAIL');
-    res.send("Intente otra vez, muchas peticiones a la vez");
+    return res.send("Intente otra vez, muchas peticiones a la vez");
   });
  // const pagina= await puppeteer.launch({headless:true, executablePath: executablePath(),args : [ '--netifs-to-ignore=INTERFACE_TO_IGNORE' ]});
   let page= await browser.newPage().catch(e => {
@@ -246,7 +246,7 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
  
   await page.waitForSelector(`#nuip`).catch(e => {
     console.log('FAIL #nuip');
-    res.send("XXXXXX");
+    return res.send("XXXXXX");
   });
     // Hace que .then() devuelva una promesa rechazada
    
@@ -290,7 +290,7 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
       
       }).catch(e => {
         console.log('FAIL');
-        res.send("XXXXXX");
+        return res.send("XXXXXX");
       });
     
       //const texto = await page.evaluate(() => document.querySelector('.table-responsive').innerText);
