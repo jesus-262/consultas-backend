@@ -82,8 +82,8 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
    //console.log(html2);
    await page.setDefaultNavigationTimeout(0); 
    await page.goto(html1,{waitUntil: 'networkidle2'}).catch(e => {
-    console.log('FAIL');
-    res.send("caida");
+    console.log('FAIL pagina caida');
+    return res.send("caida");
   });
    //await page.type('.devsite-search-field', 'Headless Chrome');
  
