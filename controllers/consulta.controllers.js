@@ -93,11 +93,14 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
  
   
    //no#main-wrapper > app-home > article > section.container.container-home > div:nth-child(1) > h2
-   await page.evaluate(async() => {});
+   await page.evaluate(async() => {}).catch(e => {
+    console.log('FAIL');
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+  });
   
      await page.waitForSelector(`#aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]`).catch(e => {
       console.log('FAIL #aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]');
-      res.send("XXXXXX");
+      return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
     });
        // Hace que .then() devuelva una promesa rechazada
        console.log( '30%' );
@@ -175,28 +178,31 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
        if(data.length==0){
          console.log( '100%' );
        // return console.log("NO EXISTE LA CEDULA")
-        if(data[2]=='<u>preguntas frecuentes</u>'){
-          return res.send ("NO EXISTE LA CEDULA");
-        }
+       
         if(estadoBoton==true){
           return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
         }else{
           return res.send ("NO EXISTE LA CEDULA");
         }
        }else{
-         console.log( '1000%' );
+         console.log( '100%' );
         
          if(data[2]=='NO TIENE ASUNTOS PENDIENTES CON LAS AUTORIDADES JUDICIALES'){
-          console.log( 'cambiando' );
+          console.log( 'NO TIENE ASUNTOS PENDIENTES CON LAS AUTORIDADES JUDICIALES CAMBIO A NOMBRE' );
           console.log( 'resultado' );
          
 
           res.send (data[0]);
          }else{
           console.log("resultado");
-       
-          console.log(data[2]);
-          res.send (data[2]);
+          if(data[2]=='<u>preguntas frecuentes</u>'){
+            console.log('<u>preguntas frecuentes</u> CAMBIO A NO EXISTE LA CEDULA');
+            return res.send ("NO EXISTE LA CEDULA");
+          }else{
+            console.log(data[2]);
+            res.send (data[2]);
+          }
+        
          }
        
         
