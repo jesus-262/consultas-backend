@@ -72,7 +72,8 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
     return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
   });
   // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
-   let page= await browser.newPage();
+  (async () => { 
+  let page= await browser.newPage();
   if (page!=null) {
     console.log('BROWSER ABIERTO');
 }else{
@@ -236,6 +237,7 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
      
        }
       }
+    })();
 }
        
 
@@ -254,7 +256,10 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
     return res.send("Intente otra vez, muchas peticiones a la vez");
   });
  // const pagina= await puppeteer.launch({headless:true, executablePath: executablePath(),args : [ '--netifs-to-ignore=INTERFACE_TO_IGNORE' ]});
-  let page= await browser.newPage();
+ 
+ (async () => {
+ let page= await browser.newPage();
+
   if (page!=null) {
     console.log('BROWSER ABIERTO');
 }else{
@@ -325,6 +330,7 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
      
 
 }
+})();
  }
  
 module.exports = consultacontrol;
