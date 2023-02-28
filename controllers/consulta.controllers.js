@@ -118,12 +118,15 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
       }).finally(e => {
         elementt.click();
       });*/
+      var primeraPagina=true;
       await page.$eval( '#aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]', form => form.click() ).catch(e => {
         console.log('FAIL boton element');
+        primeraPagina=false;
         return res.send("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+        
          
       });
-       
+       if(primeraPagina==true){
        await page.waitForTimeout(2000)
        console.log( '40%' );
        await page.waitForSelector('#continuarBtn').catch(e => {
@@ -232,6 +235,7 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
      
      
        }
+      }
 }
        
 
