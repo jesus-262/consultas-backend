@@ -72,10 +72,13 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
     return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
   });
   // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
-   let page= await browser.newPage().catch(e => {
-    console.log('FAIL');
-    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
-  });
+   let page= await browser.newPage();
+  if (page) {
+    console.log('BROWSER ABIERTO');
+}else{
+  console.log('FAIL');
+  return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+}
    console.log("BUSCANDO NOMBRE")
        
    console.log("10%")
