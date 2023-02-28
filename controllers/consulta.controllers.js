@@ -67,7 +67,10 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
     args: ["--no-sandbox"],
     env: {
       DISPLAY: ":10.0"
-  }, executablePath: executablePath()});
+  }, executablePath: executablePath()}).catch(e => {
+    console.log('FAIL');
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+  });
   // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
    let page= await browser.newPage().catch(e => {
     console.log('FAIL');
@@ -105,7 +108,10 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
     });
        // Hace que .then() devuelva una promesa rechazada
        console.log( '30%' );
-       let elementt = await page.$('#aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]');
+       let elementt = await page.$('#aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]').catch(e => {
+        console.log('FAIL');
+        return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+      });
        elementt.click();
        await page.waitForTimeout(2000)
        console.log( '40%' );
