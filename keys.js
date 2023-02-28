@@ -1,4 +1,5 @@
 const url = require('url')
+require('events').EventEmitter.defaultMaxListeners = 30;
 const {db_host,db_database,db_password,db_user,db_port} = require('./config');
 const getDatabase = function() {
  
