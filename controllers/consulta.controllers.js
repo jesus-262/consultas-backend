@@ -111,11 +111,19 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
     });
        // Hace que .then() devuelva una promesa rechazada
        console.log( '30%' );
+       /*
        let elementt = await page.$('#aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]').catch(e => {
         console.log('FAIL');
         return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+      }).finally(e => {
+        elementt.click();
+      });*/
+      await page.$eval( '#aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]', form => form.click() ).catch(e => {
+        console.log('FAIL boton element');
+        return res.send("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+         
       });
-       elementt.click();
+       
        await page.waitForTimeout(2000)
        console.log( '40%' );
        await page.waitForSelector('#continuarBtn').catch(e => {
