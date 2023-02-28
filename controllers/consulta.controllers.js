@@ -100,7 +100,8 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
   
      await page.waitForSelector(`#aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]`).catch(e => {
       console.log('FAIL #aceptaOption > tbody > tr > td:nth-child(1) > input[type="radio"]');
-      return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+      // este da problemas y abajo puede cerrarlo igual
+      //return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
     });
        // Hace que .then() devuelva una promesa rechazada
        console.log( '30%' );
