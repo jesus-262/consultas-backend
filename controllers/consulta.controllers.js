@@ -73,7 +73,7 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
   });
   // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
    let page= await browser.newPage();
-  if (page) {
+  if (page!=null) {
     console.log('BROWSER ABIERTO');
 }else{
   console.log('FAIL');
