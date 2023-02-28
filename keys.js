@@ -5,7 +5,7 @@ const getDatabase = function() {
 
   return  {
     waitForConnections : true , 
-    connectionLimit : 100 , 
+    connectionLimit : 30 , 
     queueLimit : 0 ,
     host     :db_host ,
     user     : db_user,
