@@ -242,10 +242,13 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
     return res.send("Intente otra vez, muchas peticiones a la vez");
   });
  // const pagina= await puppeteer.launch({headless:true, executablePath: executablePath(),args : [ '--netifs-to-ignore=INTERFACE_TO_IGNORE' ]});
-  let page= await browser.newPage().catch(e => {
-    console.log('FAIL');
-    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
-  });
+  let page= await browser.newPage();
+  if (page!=null) {
+    console.log('BROWSER ABIERTO');
+}else{
+  console.log('FAIL');
+  return res.send ("INTENTE DE NUEVO PAGINA REGISTRADURIA CAIDA");
+}
   await page.setDefaultNavigationTimeout(0); 
   page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
   await page.goto('https://wsp.registraduria.gov.co/censo/consultar');
