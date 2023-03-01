@@ -73,8 +73,9 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
   });
   // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
   (async () => { 
-  let page= await browser.newPage();
-  if (page!=null) {
+  const page= await browser.newPage();
+  
+  if (page) {
     console.log('BROWSER ABIERTO');
 }else{
   console.log('FAIL');
@@ -258,7 +259,7 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
  // const pagina= await puppeteer.launch({headless:true, executablePath: executablePath(),args : [ '--netifs-to-ignore=INTERFACE_TO_IGNORE' ]});
  
  (async () => {
- let page= await browser.newPage();
+  const page= await browser.newPage();
 
   if (page!=null) {
     console.log('BROWSER ABIERTO');
