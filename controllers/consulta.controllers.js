@@ -77,9 +77,6 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
   
   if (page) {
     console.log('BROWSER ABIERTO');
-}else{
-  console.log('FAIL');
-  return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
 }
    console.log("BUSCANDO NOMBRE")
        
@@ -261,11 +258,8 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
  (async () => {
   const page= await browser.newPage();
 
-  if (page!=null) {
+  if (page) {
     console.log('BROWSER ABIERTO');
-}else{
-  console.log('FAIL');
-  return res.send ("INTENTE DE NUEVO PAGINA REGISTRADURIA CAIDA");
 }
   await page.setDefaultNavigationTimeout(0); 
   page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
