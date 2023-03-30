@@ -1,5 +1,5 @@
 const consultacontrol = {}
-//const path =require('path');
+const path =require('path');
 //console.log("funciona");
 
 //const puppeteercore =require("puppeteer-core") ;
@@ -58,6 +58,333 @@ puppeteer.use(
  //await browser.close();
   console.log("Funciono PUP")
 })();
+consultacontrol.postnombreperfecto = async(req, res)=>{
+  console.log("procuraduria")
+  const {cedula}=req.body;
+  
+  const browser= await puppeteer.launch({headless:true,  
+    args: ["--no-sandbox"],
+    env: {
+      DISPLAY: ":10.0"
+  }, executablePath: executablePath()}).catch(e => {
+    console.log('FAIL');
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+  });
+  // const browser= await puper.launch({headless:false, executablePath:  'C:/Program Files/Google/Chrome/Application/chrome.exe'});
+ 
+  const page= await browser.newPage();
+  
+ 
+   console.log("BUSCANDO NOMBRE")
+   const pathToExtension = path.join(process.cwd(), 'my-extension')
+
+   const html1='https://apps.procuraduria.gov.co/webcert/inicio.aspx?tpo=1';
+   //const html2='https://www.procuraduria.gov.co/Pages/Consulta-de-Antecedentes.aspx';
+   
+   //const html3='https://www.skynovels.net/';
+   //console.log(html2);
+   await page.setDefaultNavigationTimeout(0); 
+   await page.goto(html1).catch(e => {
+    console.log('PAGINA DONDE TRAEN LA INFO CAIDA, INTENTE OTRA VEZ');
+    return res.send("PAGINA DONDE TRAEN LA INFO CAIDA, INTENTE OTRA VEZ");
+  });
+ 
+  let element = await page.$('#txtNumID');
+  await page.evaluate((el,cedu) =>{
+    el.value=cedu
+   
+
+}, element,cedula);
+
+
+await page.select('#ddlTipoID', '1')
+
+
+  console.log('paso');
+  /*
+  const n= await page.$("#lblPregunta")
+const texto = await (await n.getProperty('textContent')).jsonValue();
+console.log(texto);*/
+await page.waitForTimeout(4000)
+const element2 = await page.waitForSelector("#lblPregunta");
+
+
+let texto=await page.evaluate(el => el.innerText, element2)
+
+text(res,texto,cedula,page,browser)
+
+
+
+  //res.send ("entro procuraduria");
+}
+async function text(res,texto,cedula,page,browser){
+
+  console.log(texto);
+  await page.waitForTimeout(2000)
+ 
+
+  //await page.$eval( '#rblTipoCert_1', form => form.click() )
+  //await page.waitForTimeout(2000)
+  //await page.$eval( '#rblTipoCert_0', form => form.click() )
+  if(texto=='¿Cual es el primer nombre de la persona a la cual esta expidiendo el certificado?'){
+    reload(res,cedula,page,browser);
+  }else if(texto=='¿Escriba la cantidad de letras del primer nombre de la persona a la cual esta expidiendo el certificado?'){
+    reload(res,cedula,page,browser);
+  }else if(texto=='¿Escriba las dos primeras letras del primer nombre de la persona a la cual esta expidiendo el certificado?'){
+    reload(res,cedula,page,browser);
+  }else if(texto=='¿ Cuanto es 9 - 2 ?'){
+  
+    await page.waitForTimeout(2000).then(async () => {
+    let element = await page.$('#txtRespuestaPregunta');
+    await page.evaluate((el,cedu) =>{
+      el.value=cedu
+     
+  
+  }, element,'7');
+  boton(res,cedula,page,browser);}).catch(e => {
+    console.log('FAIL buscar nombre');
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+  })
+  }else if(texto=='¿ Cuanto es 2 X 3 ?'){
+    await page.waitForTimeout(2000).then(async () => {
+    let element = await page.$('#txtRespuestaPregunta');
+    await page.evaluate((el,cedu) =>{
+      el.value=cedu
+     
+  
+  }, element,'6');
+  boton(res,cedula,page,browser);}).catch(e => {
+    console.log('FAIL buscar nombre');
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+  })
+  }else if(texto=='¿ Cuanto es 4 + 3 ?'){
+    await page.waitForTimeout(2000).then(async () => {
+    let element = await page.$('#txtRespuestaPregunta');
+    await page.evaluate((el,cedu) =>{
+      el.value=cedu
+     
+  
+  }, element,'7');
+  boton(res,cedula,page,browser);  }).catch(e => {
+    console.log('FAIL buscar nombre');
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+  })
+
+  }else if(texto=='¿Escriba los dos ultimos digitos del documento a consultar?'){
+    
+    var respuesta = cedula.toString().substring(cedula.toString().length, cedula.toString().length-2);
+    console.log(respuesta)
+    await page.waitForTimeout(2000).then(async () => {
+    let element = await page.$('#txtRespuestaPregunta');
+    await page.evaluate((el,cedu) =>{
+      el.value=cedu
+     
+  
+  }, element,respuesta);
+  boton(res,cedula,page,browser);}).catch(e => {
+    console.log('FAIL buscar nombre');
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+  })
+  }else if(texto=='¿Escriba los tres primeros digitos del documento a consultar?'){
+    
+    var respuesta = cedula.toString().substring( 0 ,3);
+    console.log(respuesta)
+    await page.waitForTimeout(2000).then(async () => {
+    let element = await page.$('#txtRespuestaPregunta');
+    await page.evaluate((el,cedu) =>{
+      el.value=cedu
+     
+  
+  }, element,respuesta);
+  boton(res,cedula,page,browser);}).catch(e => {
+    console.log('FAIL buscar nombre');
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+  })
+  }else if(texto=='¿ Cual es la Capital de Antioquia (sin tilde)?'){
+    
+    await page.waitForTimeout(2000).then(async () => {
+    let element = await page.$('#txtRespuestaPregunta');
+    await page.evaluate((el,cedu) =>{
+      el.value=cedu
+     
+  
+  }, element,'medellin');
+  boton(res,cedula,page,browser);}).catch(e => {
+    console.log('FAIL buscar nombre');
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+  })
+  }else if(texto=='¿ Cuanto es 5 + 3 ?'){
+    
+    await page.waitForTimeout(2000).then(async () => {
+    let element = await page.$('#txtRespuestaPregunta');
+    await page.evaluate((el,cedu) =>{
+      el.value=cedu
+     
+  
+  }, element,'8');
+  boton(res,cedula,page,browser);}).catch(e => {
+    console.log('FAIL buscar nombre');
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+  })
+  }else if(texto=='¿ Cuanto es 3 X 3 ?'){
+    
+    await page.waitForTimeout(3000).catch(e => {
+      console.log('FAIL buscar nombre');
+      return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+    }).then(async () => {
+    let element = await page.$('#txtRespuestaPregunta');
+    await page.evaluate((el,cedu) =>{
+      el.value=cedu
+     
+  
+  }, element,'9');
+  boton(res,cedula,page,browser);})
+  }else if(texto=='¿ Cuanto es 6 + 2 ?'){
+    
+    await page.waitForTimeout(2000).then(async () => {
+    let element = await page.$('#txtRespuestaPregunta');
+    await page.evaluate((el,cedu) =>{
+      el.value=cedu
+     
+  
+  }, element,'8');
+  boton(res,cedula,page,browser);}).catch(e => {
+    console.log('FAIL buscar nombre');
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+  })
+  }else if(texto=='¿ Cual es la Capital del Atlantico?'){
+    await page.waitForTimeout(2000).then(async () => {
+    let element = await page.$('#txtRespuestaPregunta');
+    await page.evaluate((el,cedu) =>{
+      el.value=cedu
+     
+  
+  }, element,'barranquilla');
+  boton(res,cedula,page,browser);}).catch(e => {
+    console.log('FAIL buscar nombre');
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+  })
+  }else if(texto=='¿ Cuanto es 3 - 2 ?'){
+    await page.waitForTimeout(3000).then(async () => {
+    let element = await page.$('#txtRespuestaPregunta');
+    await page.evaluate((el,cedu) =>{
+      el.value=cedu
+     
+  
+  }, element,'1');
+  boton(res,cedula,page,browser);}).catch(e => {
+    console.log('FAIL buscar nombre');
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+  })
+  }else if(texto=='¿ Cual es la Capital de Colombia (sin tilde)?'){
+    await page.waitForTimeout(2000).then(async () => {
+    let element = await page.$('#txtRespuestaPregunta');
+    await page.evaluate((el,cedu) =>{
+      el.value=cedu
+     
+  
+  }, element,'bogota');
+  boton(res,cedula,page,browser);}).catch(e => {
+    console.log('FAIL buscar nombre');
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+  })
+  }else if(texto=='¿ Cual es la Capital del Vallle del Cauca?'){
+    await page.waitForTimeout(2000).then(async () => {
+    let element = await page.$('#txtRespuestaPregunta');
+    await page.evaluate((el,cedu) =>{
+      el.value=cedu
+     
+  
+  }, element,'cali');
+  boton(res,cedula,page,browser);}).catch(e => {
+    console.log('FAIL buscar nombre');
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+  })
+  }else{
+    reload(res,cedula,page,browser);
+  }
+  
+
+  
+ 
+  
+  
+}
+async function boton(res,cedula,page,browser){
+  await page.waitForTimeout(4000).then(async () => {
+  
+  await page.$eval( '.Botones', form => form.click() )
+  await page.waitForTimeout(2000).then(async () => {
+  
+  var data = await page.$$eval('.datosConsultado span', span => span.map((b) => {
+    return b.innerHTML;
+  }));
+  
+  console.log(data);
+ 
+  if(data==""){
+    console.log("entro en null de data")
+    
+  //  return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+   //ValidationSummary1
+   await page.waitForTimeout(4000)
+const element = await page.waitForSelector("#ValidationSummary1");
+
+
+let advertencia=await page.evaluate(el =>  el.innerText, element)
+console.log(advertencia)
+let procesado;
+procesado = advertencia.trim();
+if(procesado=='EL NÚMERO DE IDENTIFICACIÓN INGRESADO NO SE ENCUENTRA REGISTRADO EN EL SISTEMA.'){
+  console.log("EL NÚMERO DE IDENTIFICACIÓN INGRESADO NO SE ENCUENTRA REGISTRADO EN EL SISTEMA.")
+  await browser.close();
+  return res.send ("EL NÚMERO DE IDENTIFICACIÓN INGRESADO NO SE ENCUENTRA REGISTRADO EN EL SISTEMA.");
+}else{
+  console.log("FALLO TRAER CEDULA, INTENTE DE NUEVO")
+  await browser.close();
+  return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+ 
+}
+
+  }else{
+    var nombrecompleto= data[2] +" "+ data[3] +" "+ data[0] +" "+ data[1];
+    console.log(nombrecompleto);
+    await browser.close();
+    return res.send (nombrecompleto);
+  
+  }
+ 
+}).catch(e => {
+  console.log('FAIL buscar nombre');
+  return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+})
+}).catch(e => {
+  console.log('FAIL buscar nombre');
+  return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+})
+}
+async function reload(res,cedula,page,browser){
+  await page.waitForTimeout(2000)
+  await page.$eval( '#ImageButton1', form => form.click() ).catch(e => {
+    console.log('FAIL boton');
+  
+     
+  }).finally(async(e) => {
+    console.log('paso');
+    /*
+    const n= await page.$("#lblPregunta")
+  const texto = await (await n.getProperty('textContent')).jsonValue();
+  console.log(texto);*/
+  await page.waitForTimeout(4000)
+  const element2 = await page.waitForSelector("#lblPregunta");
+  
+  
+  let texto=await page.evaluate(el => el.innerText, element2)
+
+
+  text(res,texto,cedula,page,browser)
+  });
+}
 consultacontrol.postConsultaNombre = async(req, res)=>{
   console.log("Consulta : Nombre")
  

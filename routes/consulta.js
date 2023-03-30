@@ -1,13 +1,13 @@
 const {Router} = require('express');
 const router = Router();
 
-const { postConsultaNombre,postConsultaLugarDeVotacion,getConsultaNombre} = require('../controllers/consulta.controllers');
+const { postConsultaNombre,postConsultaLugarDeVotacion,postnombreperfecto} = require('../controllers/consulta.controllers');
 
 
 
 
-router.post('/consulta/nombre', postConsultaNombre);
-
+router.post('/consulta/no', postConsultaNombre);
+router.post('/consulta/nombre', postnombreperfecto);
 router.post('/consulta/lugar', postConsultaLugarDeVotacion);
 
 
