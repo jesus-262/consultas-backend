@@ -61,6 +61,7 @@ puppeteer.use(
 consultacontrol.postnombreperfecto = async(req, res)=>{
   console.log("procuraduria")
   const {cedula}=req.body;
+  console.log(cedula);
   
   const browser= await puppeteer.launch({headless:true,  
     args: ["--no-sandbox"],
