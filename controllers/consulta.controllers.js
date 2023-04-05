@@ -1,7 +1,7 @@
 const consultacontrol = {}
 const path =require('path');
 //console.log("funciona");
-const {token} = require('../config');
+const {db_token} = require('../config');
 //const puppeteercore =require("puppeteer-core") ;
 const PCR = require("puppeteer-chromium-resolver");
 const {executablePath} = require('puppeteer')
@@ -16,7 +16,7 @@ puppeteer.use(
   RecaptchaPlugin({
     provider: {
       id: '2captcha',
-      token: token
+      token: db_token
     },
     visualFeedback: true // colorize reCAPTCHAs (violet = detected, green = solved)
   })
