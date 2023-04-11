@@ -106,7 +106,7 @@ await page.select('#ddlTipoID', '1')
   const n= await page.$("#lblPregunta")
 const texto = await (await n.getProperty('textContent')).jsonValue();
 console.log(texto);*/
-await page.waitForTimeout(4000)
+await page.waitForTimeout(5000)
 const element2 = await page.waitForSelector("#lblPregunta");
 
 
@@ -315,7 +315,7 @@ async function boton(res,cedula,page,browser){
   await page.waitForTimeout(4000).then(async () => {
   
   await page.$eval( '.Botones', form => form.click() )
-  await page.waitForTimeout(2000).then(async () => {
+  await page.waitForTimeout(3000).then(async () => {
   
   var data = await page.$$eval('.datosConsultado span', span => span.map((b) => {
     return b.innerHTML;
@@ -328,7 +328,7 @@ async function boton(res,cedula,page,browser){
     
   //  return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
    //ValidationSummary1
-   await page.waitForTimeout(4000)
+   await page.waitForTimeout(6000)
 const element = await page.waitForSelector("#ValidationSummary1");
 
 
