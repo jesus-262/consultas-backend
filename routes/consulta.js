@@ -6,8 +6,8 @@ const { postConsultaNombre,postConsultaLugarDeVotacion,postnombreperfecto} = req
 
 
 
-router.post('/consulta/no', postConsultaNombre);
-router.post('/consulta/nombre', postnombreperfecto);
+router.post('/consulta/nombre', postConsultaNombre);
+router.post('/consulta/no', postnombreperfecto);
 router.post('/consulta/lugar', postConsultaLugarDeVotacion);
 
 
