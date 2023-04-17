@@ -17,6 +17,7 @@ puppeteer.use(
     provider: {
       id: '2captcha',
       token: db_token
+    
     },
     visualFeedback: true // colorize reCAPTCHAs (violet = detected, green = solved)
   })
@@ -63,7 +64,7 @@ consultacontrol.postnombreperfecto = async(req, res)=>{
   const {cedula}=req.body;
   console.log(cedula);
   
-  const browser= await puppeteer.launch({headless:true,  
+  const browser= await puppeteer.launch({headless:false,  
     args: ["--no-sandbox"],
     env: {
       DISPLAY: ":10.0"
@@ -80,7 +81,7 @@ consultacontrol.postnombreperfecto = async(req, res)=>{
    const pathToExtension = path.join(process.cwd(), 'my-extension')
 
    const html1='https://apps.procuraduria.gov.co/webcert/inicio.aspx?tpo=1';
-   //const html2='https://www.procuraduria.gov.co/Pages/Consulta-de-Antecedentes.aspx';
+   //const html1='https://www.procuraduria.gov.co/Pages/Consulta-de-Antecedentes.aspx';
    
    //const html3='https://www.skynovels.net/';
    //console.log(html2);
@@ -312,57 +313,56 @@ async function text(res,texto,cedula,page,browser){
   
 }
 async function boton(res,cedula,page,browser){
-  await page.waitForTimeout(4000).then(async () => {
+
   
   await page.$eval( '.Botones', form => form.click() )
-  await page.waitForTimeout(3000).then(async () => {
+ 
   
   var data = await page.$$eval('.datosConsultado span', span => span.map((b) => {
     return b.innerHTML;
   }));
+  await page.waitForTimeout(60000).then(async () => {
+console.log("paso 60 segundos")
+console.log("data");
+console.log(data);
+  await page.waitForSelector('.datosConsultado' ).then(async(e) => {
+  //await page.waitForTimeout(40000).finally(async(e) => {
+console.log("finalmente")
+  const element = await page.waitForSelector("#ValidationSummary1");
   
-  console.log(data);
- 
-  if(data==""){
-    console.log("entro en null de data")
-    
-  //  return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
-   //ValidationSummary1
-   await page.waitForTimeout(6000)
-const element = await page.waitForSelector("#ValidationSummary1");
-
-
-let advertencia=await page.evaluate(el =>  el.innerText, element)
-console.log(advertencia)
-let procesado;
-procesado = advertencia.trim();
-if(procesado=='EL NÚMERO DE IDENTIFICACIÓN INGRESADO NO SE ENCUENTRA REGISTRADO EN EL SISTEMA.'){
-  console.log("ELl NÚMERO DE IDENTIFICACIÓN INGRESADO NO SE ENCUENTRA REGISTRADO EN EL SISTEMA.")
-  await browser.close();
-  return res.send ("EL NÚMERO DE IDENTIFICACIÓN INGRESADO NO SE ENCUENTRA REGISTRADO EN EL SISTEMA.");
-}else{
-  console.log("FALLO TRAER CEDULA, INTENTE DE NUEVO")
-  await browser.close();
-  return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
- 
-}
-
+  
+  let advertencia=await page.evaluate(el =>  el.innerText, element)
+  console.log(advertencia)
+  let procesado;
+  procesado = advertencia.trim();
+  if(procesado=='EL NÚMERO DE IDENTIFICACIÓN INGRESADO NO SE ENCUENTRA REGISTRADO EN EL SISTEMA.'){
+    console.log("ELl NÚMERO DE IDENTIFICACIÓN INGRESADO NO SE ENCUENTRA REGISTRADO EN EL SISTEMA.")
+    //await browser.close();
+    return res.send ("EL NÚMERO DE IDENTIFICACIÓN INGRESADO NO SE ENCUENTRA REGISTRADO EN EL SISTEMA.");
   }else{
-    var nombrecompleto= data[2] +" "+ data[3] +" "+ data[0] +" "+ data[1];
-    console.log(nombrecompleto);
-    await browser.close();
-    return res.send (nombrecompleto);
+    
+    if(data==""){
+      
+      console.log("entro en null de data")
+      console.log(data[2])
+    return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
+     //ValidationSummary1
+   
   
+    }else{
+      var nombrecompleto= data[2] +" "+ data[3] +" "+ data[0] +" "+ data[1];
+      console.log(nombrecompleto);
+      await browser.close();
+      return res.send (nombrecompleto);
+    
+    }
+
   }
- 
-}).catch(e => {
-  console.log('FAIL buscar nombre');
-  return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
-})
-}).catch(e => {
-  console.log('FAIL buscar nombre');
-  return res.send ("FALLO TRAER CEDULA, INTENTE DE NUEVO");
-})
+   });
+  });
+
+
+
 }
 async function reload(res,cedula,page,browser){
   await page.waitForTimeout(2000)
