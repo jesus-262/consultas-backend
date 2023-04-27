@@ -4,7 +4,6 @@ config.db_user=process.env.DB_USER || 'root';
 config.db_password=process.env.DB_PASSWORD || '';
 config.db_database=process.env.DB_DATABASE || 'datos';
 config.db_token=process.env.DB_TOKEN || 'f68342d8a8694fb35a55f951cf639ade';
-
 config.port=process.env.PORT || 4000;
 
 
