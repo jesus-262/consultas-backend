@@ -28,6 +28,7 @@ datoscontrol.createDatos = async(req, res)=>{
   
   console.log(verificar[0]);
 //Quitar los dos comentarios y quitar verificada
+//
 caso ='VERIFICADA';
   //caso +=' CEDULA REPETIDA EN FOLIOS : ';
   if(verificar!=""){
