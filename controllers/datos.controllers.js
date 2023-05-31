@@ -27,10 +27,10 @@ datoscontrol.createDatos = async(req, res)=>{
   const verificar= await pool.query(query);
   
   console.log(verificar[0]);
-//Quitar los dos comentarios y quitar verificada
+//poner verificada y comentar los dos casos+=
 //
-caso ='VERIFICADA';
-  //caso +=' CEDULA REPETIDA EN FOLIOS : ';
+//caso ='VERIFICADA';
+  caso +=' CEDULA REPETIDA EN FOLIOS : ';
   if(verificar!=""){
 
     //return res.status(401).json({messaje:"cedula existe"})
@@ -40,7 +40,7 @@ caso ='VERIFICADA';
     console.log(caso)
     for(var i=0;i<verificar.length;i++){
       console.log(verificar[i].folio)
-    //caso += verificar[i].folio + ' - '
+    caso += verificar[i].folio + ' - '
     console.log(caso)
   }
 
