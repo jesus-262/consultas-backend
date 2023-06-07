@@ -3,7 +3,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 require('dotenv').config()
 const {port, cors_origin} = require('./config');
-console.log("NO")
+
 const app=express();
 
 //configuracion
