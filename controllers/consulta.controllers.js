@@ -594,7 +594,7 @@ consultacontrol.postConsultaNombre = async(req, res)=>{
   await page.goto('https://wsp.registraduria.gov.co/censo/consultar');
   //....
 
-   console.log("10 %")
+   console.log("10%")
   await page.waitForTimeout(4000)
   await page.screenshot({
     path: 'example.png'
